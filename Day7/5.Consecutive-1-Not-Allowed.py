@@ -2,6 +2,7 @@
 def main():
     def DistinctBinary(n):
         dp=[[0]*n for i in range(2)]
+        #Comment
         # dp=[]
         # for i in range(2):
         #     dp.append([int(x) for x in range(n)])
