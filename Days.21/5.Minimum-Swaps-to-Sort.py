@@ -1,8 +1,12 @@
+#Minimum Swaps to Sort
 
-def MinSwaps(nums,n):
+
+def main():
+    n=int(input())
+    arr=list(map(int,input().strip().split()))
     pairs=[]
     for i in range(n):
-        pairs.append([nums[i],i])
+        pairs.append([arr[i],i])
     pairs.sort()
     count=0
     for i in range(n):
@@ -10,14 +14,8 @@ def MinSwaps(nums,n):
             indx=pairs[i][1]
             pairs[i],pairs[indx]=pairs[indx],pairs[i]
             count+=1
-    return count
-
-def main():
-    n=int(input())
-    nums=list(map(int,input().strip().split()))
-    ans=MinSwaps(nums,n)
-    print(ans)
+    print(count)
 
 
-if __name__=='__main__':
-    main()
+
+main()

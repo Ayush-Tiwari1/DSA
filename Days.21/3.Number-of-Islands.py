@@ -1,32 +1,34 @@
-def dfs(i,j,n,m,grid,visited):
-    if i<0 or j<0 or i>=n or j>=m or grid[i][j]==0 or visited[i][j]==True:
-        return
-    visited[i][j]=True
-    dfs(i-1,j,n,m,grid,visited)
-    dfs(i+1,j,n,m,grid,visited)
-    dfs(i,j-1,n,m,grid,visited)
-    dfs(i,j+1,n,m,grid,visited)
-    dfs(i-1,j-1,n,m,grid,visited)
-    dfs(i-1,j+1,n,m,grid,visited)
-    dfs(i+1,j-1,n,m,grid,visited)
-    dfs(i+1,j+1,n,m,grid,visited)
 
-def numIslands(grid):
-    n=len(grid)
-    m=len(grid[0])
-    visited=[[False for j in range(m)] for i in range(n)]
-    count=0
+def main():
+    def dfs(i,j,n,m,visited,grid):
+        if i<0 or j<0 or i>=n or j>=m or visited[i][j]==True or grid[i][j]==0:
+            return
+        visited[i][j]=True
+        dfs(i+1,j,n,m,visited,grid)
+        dfs(i,j+1,n,m,visited,grid)
+        dfs(i-1,j,n,m,visited,grid)
+        dfs(i,j-1,n,m,visited,grid)
+        dfs(i-1,j-1,n,m,visited,grid)
+        dfs(i-1,j+1,n,m,visited,grid)
+        dfs(i+1,j-1,n,m,visited,grid)
+        dfs(i+1,j+1,n,m,visited,grid)
+    n,m=map(int,input().strip().split())
+    grid=[[] for i in range(n)]
+    for i in range(n):
+        grid[i]=list(map(int,input().strip().split()))
     for i in range(n):
         for j in range(m):
-            if grid[i][j]==1 and visited[i][j]==False:
-                count+=1
-                dfs(i,j,n,m,grid,visited)
-    return count
-
-if __name__=='__main__':
-    n,m=map(int,input().split())
-    grid=[]
+            print(grid[i][j],end=" ")
+        print()
+    count=0
+    visited=[[False for j in range(m)] for i in range(n)]
     for i in range(n):
-        grid.append(list(map(int,input().strip().split())))
-    islands=numIslands(grid)
-    print('Islands:',islands)
+        for j in range(m):
+            if visited[i][j]==False and grid[i][j]==1:
+                count+=1
+                dfs(i,j,n,m,visited,grid)
+    print('Number of Islands: ',count)
+
+
+
+main()

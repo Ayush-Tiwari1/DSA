@@ -1,42 +1,43 @@
+#Detect Cycle in an undirected graph
 
-def Print(adj,V):
+def main():
+    def DFS(i,par,V,visited,adj):
+        visited[i]=par
+        for j in range(len(adj[i])):
+            if visited[adj[i][j]]==-1:
+                b=DFS(adj[i][j],i,V,visited,adj)
+                if b==True:
+                    return True
+            elif visited[i]!=adj[i][j]:
+                return True
+        return False
+    V,E=map(int,input().strip().split())
+    adj=[[] for _ in range(V)]
+    for _ in range(E):
+        u,v=map(int,input().strip().split())
+        adj[u].append(v)
+        adj[v].append(u)
     for i in range(V):
-        print(i," :",end=" ")
+        print(i,end=": ")
         for j in range(len(adj[i])):
             print(adj[i][j],end=" ")
         print()
-
-def dfs(adj,i,parent,visited,V):
-    visited[i]=True
-    for j in range(len(adj[i])):
-        if visited[adj[i][j]]==False:
-            if dfs(adj,adj[i][j],i,visited,V)==True:
-                return True
-        elif parent!=adj[i][j]:
-            return True
-    return False
-
-def IsCycle(adj,V):
-    visited=[False]*V
+    
+    flag=False
+    visited=[-1 for _ in range(V)]
     for i in range(V):
-        if visited[i]==False:
-            if dfs(adj,i,-1,visited,V)==True:
-                return True
-    return False
-
-def main():
-    V,E=map(int,input().split())
-    adj=[[] for _ in range(V)]
-    for _ in range(E):
-        u,v=map(int,input().split())
-        adj[u].append(v)
-        adj[v].append(u)
-    Print(adj,V)
-    ans=IsCycle(adj,V)
-    if ans==True:
+        if visited[i]==-1:
+            if DFS(i,i,V,visited,adj)==True:
+                flag=True
+                break
+            
+    if flag==True:
         print('Cycle Present')
     else:
         print('Cycle Not Present')
 
-if __name__=='__main__':
-    main()
+
+
+
+
+main()
