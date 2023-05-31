@@ -33,9 +33,6 @@ def RottenOranges(grid,n,m):
         for j in range(m):
             if grid[i][j]==1:
                 return -1
-
-    if time==0:
-        return -1
     return time
 
 def main():
@@ -49,5 +46,5 @@ def main():
     else:
         print('Time to Rotten All Oranges:',ans)
 
-if __name__=='__main__':
-    main()
+
+main()

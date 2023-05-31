@@ -1,46 +1,53 @@
-
-def Find(u,parent):
-    if parent[u]==u:
-        return u
-    parent[u]=Find(parent[u],parent)
-    return parent[u]
-
-def Union(a,b,parent,rank):
-    if rank[a]>rank[b]:
-        parent[b]=a
-    elif rank[a]<rank[b]:
-        parent[a]=b
-    else:
-        rank[a]+=1
-        parent[b]=a
-
-def DetectCycle(adj,V):
-    parent=[int(i) for i in range(V)]
-    rank=[0]*V
-    for i in range(V):
-        for j in range(len(adj[i])):
-            if i<adj[i][j]:
-                p1=Find(i,parent)
-                p2=Find(adj[i][j],parent)
-                if p1==p2:
-                    return True
-                else:
-                    Union(p1,p2,parent,rank)
-    return False
+#Detect Cycle using DSU
 
 def main():
-    V,E=map(int,input().split())
+    def Find(u,parent):
+        if parent[u]==-1:
+            return u
+        parent[u]=Find(parent[u],parent)
+        return parent[u]
+    
+    def Union(x,y,parent,rank):
+        if rank[x]==rank[y]:
+            parent[y]=x
+            rank[x]+=1
+        elif rank[x]>rank[y]:
+            parent[y]=x
+        else:
+            parent[x]=y
+    
+    def CycleDetection(V,adj):
+        parent=[-1 for i in range(V)]
+        rank=[0 for i in range(V)]
+        for i in range(V):
+            for j in range(len(adj[i])):
+                if i<adj[i][j]:
+                    x=Find(i,parent)
+                    y=Find(adj[i][j],parent)
+                    if x==y:
+                        return True
+                    Union(x,y,parent,rank)
+        
+        return False            
+                    
+    
+    
+    V,E=map(int,input().strip().split())
     adj=[[] for i in range(V)]
-    for _ in range(E):
-        u,v=map(int,input().split())
+    for i in range(E):
+        u,v=map(int,input().strip().split())
         adj[u].append(v)
         adj[v].append(u)
-    ans=DetectCycle(adj,V)
-    if ans==True:
+    print('Adjancency List:')
+    for i in range(V):
+        print(i,end=": ")
+        for j in range(len(adj[i])):
+            print(adj[i][j],end=" ")
+        print()
+    b=CycleDetection(V,adj)
+    if b==True:
         print('Cycle Present')
     else:
-        print('Cycle is Not Present')
+        print('Cycle Not Present')
 
-
-if __name__=='__main__':
-    main()
+main()

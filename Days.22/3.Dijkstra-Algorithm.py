@@ -1,38 +1,31 @@
-#Dijkstra-Algorithm----> Shortest Path from the Source to all other nodes.
-#Not able to detect Negative-Edge Weight Cycle
+#Dijkstra's Algorithm
 from queue import PriorityQueue
-
-def DijkstraAlgorithm(adj,V,S):
-    dist=[-1]*V
-    pq=PriorityQueue()
-    pq.put([0,S])
-    size=1
-    #BFS ----> rm*wa*  ----> remove mark* work add*
-    while size>0:
-        temp=pq.get()
-        size-=1
-        d=temp[0]
-        i=temp[1]
-        if dist[i]==-1:
-            dist[i]=d
-            for j in range(len(adj[i])):
-                if dist[adj[i][j][0]]==-1:
-                    pq.put([d+adj[i][j][1],adj[i][j][0]])
-                    size+=1
-    return dist
-
 def main():
+    def DijkstraAlgorithm(src,V,adj,distance):
+        #BFS + Priority Queue
+        #rm*wa*
+        pq=PriorityQueue()
+        pq.put([0,src])
+        while pq.empty() == False:
+            dist,sc=pq.get()
+            if distance[sc]==-1:
+                print(dist,sc)
+                distance[sc]=dist
+                for j in range(len(adj[sc])):
+                    if distance[adj[sc][j][0]]==-1:
+                        pq.put([dist+adj[sc][j][1],adj[sc][j][0]])
+        
+        
     V,E=map(int,input().strip().split())
-    adj=[[] for _ in range(V)]
-    for _ in range(E):
+    adj=[[] for i in range(V)]
+    for i in range(E):
         u,v,dist=map(int,input().strip().split())
         adj[u].append([v,dist])
         adj[v].append([u,dist])
-    S=int(input())
-    dist=DijkstraAlgorithm(adj,V,S)
-    for d in dist:
-        print(d,end=" ")
+    src=int(input())
+    distance=[-1 for i in range(V)]
+    DijkstraAlgorithm(src,V,adj,distance)
+    print(distance)
 
 
-if __name__=='__main__':
-    main()
+main()
