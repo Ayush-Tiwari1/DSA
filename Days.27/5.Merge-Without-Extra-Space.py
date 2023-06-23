@@ -12,11 +12,11 @@ def Merge(n,m,arr1,arr2):
                 if arr1[i]>arr1[j]:
                     arr1[i],arr1[j]= arr1[j], arr1[i]
             elif i<n:
-                if arr1[i]>arr2[j%n]:
-                    arr1[i],arr2[j%n]=arr2[j%n], arr1[i]
+                if arr1[i]>arr2[j-n]:
+                    arr1[i],arr2[j-n]=arr2[j-n], arr1[i]
             else:
-                if arr2[i%n]>arr2[j%n]:
-                    arr2[i%n],arr2[j%n]=arr2[j%n],arr2[i%n]
+                if arr2[i-n]>arr2[j-n]:
+                    arr2[i-n],arr2[j-n]=arr2[j-n],arr2[i-n]
             i+=1
             j+=1
 
